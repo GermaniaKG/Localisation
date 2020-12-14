@@ -98,8 +98,7 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
             throw new \RuntimeException($msg);
         }
 
-        $localisation = new $this->php_locale_class;
-        $localisation->setLocale($locale);
+        $localisation = new $this->php_locale_class($locale);
 
         return $localisation;
     }
