@@ -30,13 +30,13 @@ $ composer require germania-kg/localisation
 <?php
 namespace Germania\Localisation;
 
-interface LocalisationInterface
+interface LocalisationInterface 
 {
-    // Returns a fully-qualified Locale string such as `en_GB`.
-    public function __toString();
-
     // Sets the fully-qualified Locale string such as `en_GB`.
     public function setLocale( string $locale ) : LocalisationInterface;
+
+    // Returns a fully-qualified Locale string such as `en_GB`.
+    public function __toString();
 
     // Returns a fully-qualified Locale string such as `en_GB`.
     public function getLocale() : string;
@@ -66,6 +66,33 @@ interface LocalisationFactoryInterface
     public function createFromRequest( Request $request ) : Localisation;
 }
 
+```
+
+
+
+## Factories
+
+### NegotiationLocalisationFactory
+
+The constructor requires an instance of Will Durand´s [LanguageNegotiator](https://github.com/willdurand/Negotiation) and an array with available locale strings.
+
+```php
+<?php
+use Germania\Localisation\NegotiationLocalisationFactory;
+use Negotiation\LanguageNegotiator;
+use Psr\Http\Message\ServerRequestInterface;
+
+$negotiator = new LanguageNegotiator;
+
+$available = array(
+	"de" => "de_DE",
+  "de-de" => "de_DE",
+  "de_DE" => "de_DE"
+);
+$factory = new NegotiationLocalisationFactory( $negotiator, $available);
+
+// Have PSR-7 ServerReuqest at hand
+$localisation = $factory->createFromRequest( $server_request );
 ```
 
 
