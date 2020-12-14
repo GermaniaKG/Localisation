@@ -24,7 +24,7 @@ class Localisation implements LocalisationInterface
     /**
      * @inheritDoc
      */
-    public function setLocale( string $locale ) : self
+    public function setLocale( string $locale ) : LocalisationInterface
     {
         $this->locale = str_replace("-", "_", $locale);
         return $this;
