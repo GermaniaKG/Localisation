@@ -87,14 +87,19 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     {
         $acceptLangageHeader = $request->getHeaderLine('Accept-Language');
         $priorities = $this->getLanguageCodes();
+        $locale_strings = $this->getLocaleStrings();
 
         try {
             $bestLanguage = $this->negotiator->getBest($acceptLangageHeader, $priorities);
-            $type = $bestLanguage->getType();
-            $locale = $this->available_locales[$type] ?? null;
+            if ($bestLanguage) {
+                $type = $bestLanguage->getType();
+                $locale = $this->available_locales[$type] ?? null;
+            }
+            else {
+                $locale = $locale_strings[0];
+            }
         }
         catch (NegotiationException $e) {
-            $locale_strings = $this->getLocaleStrings();
             $locale = $locale_strings[0];
         }
 
