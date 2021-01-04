@@ -2,6 +2,7 @@
 namespace Germania\Localisation;
 
 use Negotiation\LanguageNegotiator;
+use Negotiation\Exception\Exception as NegotiationException;
 use Psr\Http\Message\ServerRequestInterface;
 
 
@@ -87,11 +88,15 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
         $acceptLangageHeader = $request->getHeaderLine('Accept-Language');
         $priorities = $this->getLanguageCodes();
 
-        $bestLanguage = $this->negotiator->getBest($acceptLangageHeader, $priorities);
-
-        $type = $bestLanguage->getType();
-
-        $locale = $this->available_locales[$type] ?? null;
+        try {
+            $bestLanguage = $this->negotiator->getBest($acceptLangageHeader, $priorities);
+            $type = $bestLanguage->getType();
+            $locale = $this->available_locales[$type] ?? null;
+        }
+        catch (NegotiationException $e) {
+            $locale_strings = $this->getLocaleStrings();
+            $locale = $locale_strings[0];
+        }
 
         if (empty($locale)) {
             $msg = sprintf("Locale not found for key '%s'", $type);
@@ -133,6 +138,16 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     public function getLanguageCodes() : array
     {
         return array_keys($this->available_locales);
+    }
+
+    /**
+     * Returns the available locale strings.
+     *
+     * @return array
+     */
+    public function getLocaleStrings() : array
+    {
+        return array_values($this->available_locales);
     }
 
 
