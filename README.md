@@ -24,12 +24,6 @@ $ composer require germania-kg/localisation
 
 
 
-
-
----
-
-
-
 ## Interfaces
 
 ### LocalisationInterface
@@ -58,8 +52,6 @@ interface LocalisationInterface
 
 ```
 
-
-
 ### LocalisationFactoryInterface
 
 ```php
@@ -71,6 +63,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 interface LocalisationFactoryInterface
 {
+    /**
+     * @param  ServerRequestInterface $request PSR-7 Server Request
+     * @return \Germania\Localisation\LocalisationInterface
+     * @throws \Germania\Localisation\FactoryException
+     */  
     public function createFromRequest( Request $request ) : Localisation;
 }
 
@@ -82,25 +79,44 @@ interface LocalisationFactoryInterface
 
 ### NegotiationLocalisationFactory
 
-The constructor requires an instance of Will Durand´s [LanguageNegotiator](https://github.com/willdurand/Negotiation) and an array with available locale strings.
+Class *NegotiationLocalisationFactory* implements **LocalisationFactoryInterface**. The constructor requires an instance of Will Durand´s [**LanguageNegotiator**](https://github.com/willdurand/Negotiation) and an array with available *language codes* and *locale strings*.
+
+#### Setup
 
 ```php
 <?php
 use Germania\Localisation\NegotiationLocalisationFactory;
 use Negotiation\LanguageNegotiator;
-use Psr\Http\Message\ServerRequestInterface;
 
 $negotiator = new LanguageNegotiator;
-
 $available = array(
 	"de" => "de_DE",
   "de-de" => "de_DE",
   "de_DE" => "de_DE"
 );
+
 $factory = new NegotiationLocalisationFactory( $negotiator, $available);
 
-// Have PSR-7 ServerReuqest at hand
-$localisation = $factory->createFromRequest( $server_request );
+// Optional, as factory would use the first available locale from above, 
+// e.g. "de_DE"
+$factory->setDefaultLocale("en_US");
+```
+
+#### Usage
+
+```php
+<?php
+use Germania\Localisation\ExceptionInterface;  
+use Psr\Http\Message\ServerRequestInterface;
+
+try {
+  $server_request = ...; //
+	$localisation = $factory->createFromRequest( $server_request );  
+}
+catch (\Germania\Localisation\ExceptionInterface $e) {
+  echo get_class($e);
+  // Germania\Localisation\FactoryException  
+}
 ```
 
 
