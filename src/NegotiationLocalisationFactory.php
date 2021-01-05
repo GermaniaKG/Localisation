@@ -109,7 +109,7 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
 
         if (empty($locale)) {
             $msg = sprintf("Locale not found for key '%s'", $type);
-            throw new \RuntimeException($msg);
+            throw new FactoryException($msg);
         }
 
         $localisation = new $this->php_locale_class($locale);
@@ -174,6 +174,7 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     {
         return array_keys($this->available_locales);
     }
+
 
     /**
      * Returns the available locale strings.
