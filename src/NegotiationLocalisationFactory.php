@@ -65,6 +65,13 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
      */
     protected $negotiator;
 
+    /**
+     * Default locale string, s.th. like `en_US` or `de_DE`
+     *
+     * @var string
+     */
+    protected $default_locale;
+
 
 
     /**
@@ -87,20 +94,17 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     {
         $acceptLangageHeader = $request->getHeaderLine('Accept-Language');
         $priorities = $this->getLanguageCodes();
-        $locale_strings = $this->getLocaleStrings();
 
+        $locale = $this->getDefaultLocale();
         try {
             $bestLanguage = $this->negotiator->getBest($acceptLangageHeader, $priorities);
             if ($bestLanguage) {
                 $type = $bestLanguage->getType();
-                $locale = $this->available_locales[$type] ?? null;
-            }
-            else {
-                $locale = $locale_strings[0];
+                $locale = $this->available_locales[$type] ?? $locale;
             }
         }
         catch (NegotiationException $e) {
-            $locale = $locale_strings[0];
+            // noop
         }
 
         if (empty($locale)) {
@@ -113,6 +117,32 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
         return $localisation;
     }
 
+
+
+    /**
+     * Sets the default localisation string.
+     *
+     * @param null|string
+     */
+    public function setDefaultLocale( ?string $locale ) : self
+    {
+        $this->default_locale = $locale;
+
+        return $this;
+    }
+
+    /**
+     * Returns the default localisation string.
+     *
+     * @return null|string
+     */
+    public function getDefaultLocale(  ) : ?string
+    {
+        $locale_strings = $this->getLocaleStrings();
+        $fallback_default_locale = $locale_strings[0] ?? null;
+
+        return $this->default_locale ?: $fallback_default_locale;
+    }
 
 
     /**

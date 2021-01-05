@@ -99,6 +99,10 @@ $available = array(
 );
 $factory = new NegotiationLocalisationFactory( $negotiator, $available);
 
+// Optional, as it is using the first available from above, 
+// e.g. "de_DE"
+$factory->setDefaultLocale("en_US");
+
 // Have PSR-7 ServerReuqest at hand
 $localisation = $factory->createFromRequest( $server_request );
 ```

@@ -37,4 +37,81 @@ class NegotiationLocalisationFactoryTest extends \PHPUnit\Framework\TestCase
     }
 
 
+    /**
+     * @depends testInstantiation
+     */
+    public function testLocales( $sut )
+    {
+        $available = array(
+          "de" => "de_DE",
+          "de-de" => "de_DE",
+          "de_DE" => "de_DE"
+        );
+
+        $fluent = $sut->setAvailableLocales($available);
+        $this->assertInstanceOf(LocalisationFactoryInterface::class, $fluent);
+
+        $language_codes = $sut->getLanguageCodes();
+        $this->assertIsArray( $language_codes );
+        $this->assertEquals( array_keys($available), $language_codes );
+
+        $locale_strings = $sut->getLocaleStrings();
+        $this->assertIsArray( $locale_strings );
+        $this->assertEquals( array_values($available), $locale_strings );
+
+        $default_locale = $sut->getDefaultLocale();
+        $this->assertEquals( "de_DE", $default_locale );
+
+        return $sut;
+    }
+
+
+    /**
+     * @dataProvider provideDefaultLocales
+     * @depends testInstantiation
+     */
+    public function testDefaultLocale( $available, $set_default, $expected_default, $sut )
+    {
+
+        $sut->setAvailableLocales($available);
+        $sut->setDefaultLocale($set_default);
+
+        $default_locale = $sut->getDefaultLocale();
+        $this->assertEquals( $expected_default, $default_locale );
+
+        return $sut;
+    }
+
+    public function provideDefaultLocales()
+    {
+        $available = array(
+          "de" => "de_DE",
+          "de-de" => "de_DE",
+          "de_DE" => "de_DE"
+        );
+
+        return array(
+            [ $available,   null,     "de_DE" ],
+            [ $available,   "en_US",  "en_US" ],
+            [ array(),      null,     null    ],
+            [ array(),      "en_GB",  "en_GB" ],
+        );
+    }
+
+
+
+
+    /**
+     * @depends testInstantiation
+     */
+    public function testNegotiatorInterceptors( $sut )
+    {
+        $fluent = $sut->setNegotiator($this->negotiator);
+
+        $this->assertInstanceOf(LocalisationFactoryInterface::class, $fluent);
+
+        return $sut;
+    }
+
+
 }
