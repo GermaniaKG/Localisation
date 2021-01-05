@@ -108,7 +108,7 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
         }
 
         if (empty($locale)) {
-            $msg = sprintf("Locale not found for key '%s'", $type);
+            $msg = sprintf("Could not create Localisation");
             throw new FactoryException($msg);
         }
 
