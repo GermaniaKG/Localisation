@@ -3,6 +3,9 @@ namespace tests;
 
 use Germania\Localisation\NegotiationLocalisationFactory;
 use Germania\Localisation\LocalisationFactoryInterface;
+use Germania\Localisation\LocalisationInterface;
+use Germania\Localisation\FactoryException;
+use Germania\Localisation\ExceptionInterface;
 use Negotiation\LanguageNegotiator;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -70,7 +73,7 @@ class NegotiationLocalisationFactoryTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideDefaultLocales
      * @depends testInstantiation
      */
-    public function testDefaultLocale( $available, $set_default, $expected_default, $sut )
+    public function testLocalisationCreation( $available, $set_default, $expected_default, $sut )
     {
 
         $sut->setAvailableLocales($available);
@@ -78,6 +81,19 @@ class NegotiationLocalisationFactoryTest extends \PHPUnit\Framework\TestCase
 
         $default_locale = $sut->getDefaultLocale();
         $this->assertEquals( $expected_default, $default_locale );
+
+        $request_mock = $this->prophesize(ServerRequestInterface::class);
+        $request_mock->getHeaderLine('Accept-Language')->willReturn(null);
+        $request = $request_mock->reveal();
+
+        if (!$default_locale) {
+            $this->expectException(ExceptionInterface::class);
+            $this->expectException(FactoryException::class);
+        }
+
+        $localisation = $sut->createFromRequest( $request );
+        $this->assertInstanceOf(LocalisationInterface::class, $localisation);
+        $this->assertEquals($localisation->getLocale(), $default_locale);
 
         return $sut;
     }
@@ -99,6 +115,13 @@ class NegotiationLocalisationFactoryTest extends \PHPUnit\Framework\TestCase
     }
 
 
+
+    public function provideHeadersAndExpectedValues()
+    {
+        return array(
+            [ null, "de_DE"]
+        );
+    }
 
 
     /**
