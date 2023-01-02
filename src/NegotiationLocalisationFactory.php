@@ -72,7 +72,10 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
      */
     protected $default_locale;
 
-
+    /**
+     * @var array
+     */
+    public $available_locales = array();
 
     /**
      * @param LanguageNegotiator $negotiator        Will Durand's LanguageNegotiator
