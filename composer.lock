@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c61721b544882bb3a1412c908a128c6",
+    "content-hash": "c6e0cd61f7b5ac363466fd3cab6a5e22",
     "packages": [
         {
             "name": "psr/http-message",
@@ -1690,6 +1690,65 @@
                 "source": "https://github.com/phpspec/prophecy-phpunit/tree/v2.0.1"
             },
             "time": "2020-07-09T08:33:42+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "ef38a25950e5d0e6c95eedf49d8a784272f8dc5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ef38a25950e5d0e6c95eedf49d8a784272f8dc5e",
+                "reference": "ef38a25950e5d0e6c95eedf49d8a784272f8dc5e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-03T13:40:32+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -5151,10 +5210,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.1|^8.0"
+        "php": "^7.4|^8.0"
     },
-    "platform-dev": {
-        "php": "^7.3|^8.0"
-    },
+    "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }
