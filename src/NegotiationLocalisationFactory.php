@@ -78,9 +78,9 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     public $available_locales = array();
 
     /**
-     * @param LanguageNegotiator $negotiator        Will Durand's LanguageNegotiator
-     * @param array              $locales           Available locales with keys as language codes and Locale string values
-     * @param string             $php_locale_class  Optional: Custom Localisation class, default is `\Germania\Localisation\Localisation`
+     * @param LanguageNegotiator $negotiator         Will Durand's LanguageNegotiator
+     * @param array              $available_locales  Available locales with keys as language codes and Locale string values
+     * @param string             $php_locale_class   Optional: Custom Localisation class, default is `\Germania\Localisation\Localisation`
      */
     public function __construct( LanguageNegotiator $negotiator, array $available_locales, string $php_locale_class = null )
     {
@@ -125,7 +125,7 @@ class NegotiationLocalisationFactory implements LocalisationFactoryInterface
     /**
      * Sets the default localisation string.
      *
-     * @param null|string
+     * @param null|string $locale
      */
     public function setDefaultLocale( ?string $locale ) : self
     {

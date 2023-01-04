@@ -10,11 +10,7 @@
 
 [![Packagist](https://img.shields.io/packagist/v/germania-kg/localisation.svg?style=flat)](https://packagist.org/packages/germania-kg/localisation)
 [![PHP version](https://img.shields.io/packagist/php-v/germania-kg/localisation.svg)](https://packagist.org/packages/germania-kg/localisation)
-[![Build Status](https://img.shields.io/travis/GermaniaKG/Localisation.svg?label=Travis%20CI)](https://travis-ci.org/GermaniaKG/Localisation)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/badges/build.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Localisation/build-status/master)
-
+[![Tests](https://github.com/GermaniaKG/Localisation/actions/workflows/tests.yml/badge.svg)](https://github.com/GermaniaKG/Localisation/actions/workflows/tests.yml)
 
 ## Installation
 
